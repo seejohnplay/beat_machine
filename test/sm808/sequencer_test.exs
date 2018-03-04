@@ -1,62 +1,31 @@
 defmodule SequencerTest do
   use ExUnit.Case
-  doctest Sm808
 
-  alias Sm808.{Sequencer, Song}
+  import ExUnit.CaptureIO
 
-  test "creating a new sequencer" do
-    sequencer = Sequencer.new()
+  alias Sm808.{Sequencer, Song, ScreenWriter}
 
-    assert sequencer.pid == nil
+  test "starting a sequencer with one pattern" do
+    bpm = 1000
+    title = "New Song"
+    song = Song.new(bpm, title, [ScreenWriter])
+    {:ok, song} = Sm808.Song.add_pattern(song, [1, 0, 0, 0], "kick")
+
+    assert capture_io(fn ->
+             Sequencer.play(song, 4)
+           end) == " kick | | | |"
   end
 
-  test "starting a new sequencer" do
-    bpm = 120
+  test "starting a sequencer with overlapping patterns" do
+    bpm = 1000
     title = "New Song"
-    song = Song.new(bpm, title)
-    sequencer = Sequencer.new()
-    {:ok, sequencer} = Sequencer.start(sequencer, song)
+    song = Song.new(bpm, title, [Sm808.ScreenWriter])
+    {:ok, song} = Sm808.Song.add_pattern(song, [1, 0, 0, 0], "kick")
+    {:ok, song} = Sm808.Song.add_pattern(song, [0, 0, 0, 0, 1, 0, 0, 0], "snare")
+    {:ok, song} = Sm808.Song.add_pattern(song, [0, 0, 1, 0, 0, 0, 1, 0], "hihat")
 
-    assert Process.alive?(sequencer.pid)
-
-    # Teardown
-    {:ok, _sequencer} = Sequencer.stop(sequencer)
-  end
-
-  test "attemping to start a sequencer already running" do
-    bpm = 120
-    title = "New Song"
-    song = Song.new(bpm, title)
-    sequencer = Sequencer.new()
-    {:ok, sequencer} = Sequencer.start(sequencer, song)
-    {:error, message} = Sequencer.start(sequencer, song)
-
-    assert message == :already_running
-
-    # Teardown
-    {:ok, _sequencer} = Sequencer.stop(sequencer)
-  end
-
-  test "stopping a sequencer that's running" do
-    bpm = 120
-    title = "New Song"
-    song = Song.new(bpm, title)
-    sequencer = Sequencer.new()
-    {:ok, sequencer} = Sequencer.start(sequencer, song)
-    {:ok, sequencer} = Sequencer.stop(sequencer)
-
-    assert sequencer.pid == nil
-  end
-
-  test "attemping to stop a sequencer not currently running" do
-    bpm = 120
-    title = "New Song"
-    song = Song.new(bpm, title)
-    sequencer = Sequencer.new()
-    {:ok, sequencer} = Sequencer.start(sequencer, song)
-    {:ok, _sequencer} = Sequencer.stop(sequencer)
-    {:error, message} = Sequencer.stop(sequencer)
-
-    assert message == :not_running
+    assert capture_io(fn ->
+             Sequencer.play(song, 8)
+           end) == "   kick |   | hihat   |   |  snare  kick |   | hihat   |   |"
   end
 end

@@ -1,6 +1,5 @@
 defmodule SongTest do
   use ExUnit.Case
-  doctest Sm808
 
   alias Sm808.Song
 

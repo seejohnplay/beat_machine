@@ -1,6 +1,5 @@
 defmodule PatternTest do
   use ExUnit.Case
-  doctest Sm808
 
   alias Sm808.Pattern
 

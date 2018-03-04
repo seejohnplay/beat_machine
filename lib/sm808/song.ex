@@ -1,13 +1,13 @@
 defmodule Sm808.Song do
-  alias Sm808.{Song, Pattern}
+  alias Sm808.{Song, Pattern, ScreenWriter, AudioWriter}
 
   @enforce_keys [:bpm, :title, :patterns]
-  defstruct [:bpm, :title, :patterns]
+  defstruct [:bpm, :title, :patterns, :writers]
 
   # Public API
 
-  def new(bpm, title) do
-    %Song{bpm: bpm, title: title, patterns: []}
+  def new(bpm, title, writers \\ [ScreenWriter, AudioWriter]) do
+    %Song{bpm: bpm, title: title, patterns: [], writers: writers}
   end
 
   def add_pattern(song = %Song{}, steps, sample_name) do
@@ -21,5 +21,22 @@ defmodule Sm808.Song do
         patterns = [pattern | song.patterns]
         {:ok, %{song | patterns: patterns}}
     end
+  end
+
+  def handle_tick(%Song{patterns: patterns, writers: writers}, tick) do
+    handle_tick(writers, patterns, tick)
+  end
+
+  # Private
+
+  def handle_tick([], _, _), do: nil
+
+  def handle_tick(Sm808.TestWriter = writer, patterns, tick) do
+    writer.handle_steps(patterns, tick)
+  end
+
+  def handle_tick([writer | writers], patterns, tick) do
+    writer.handle_steps(patterns, tick)
+    handle_tick(writers, patterns, tick)
   end
 end
