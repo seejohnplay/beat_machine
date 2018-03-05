@@ -6,6 +6,7 @@ defmodule Sm808.MixProject do
       app: :sm808,
       version: "0.1.0",
       elixir: "~> 1.6",
+      escript: escript(),
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -16,6 +17,10 @@ defmodule Sm808.MixProject do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  defp escript do
+    [main_module: Sm808.CLI]
   end
 
   # Run "mix help deps" to learn about dependencies.

@@ -7,16 +7,19 @@ An Elixir application that models the sequencer part of a drum machine.
 * Mac OS X (for audio playback)
 * Elixir 1.6 (Visit [https://elixir-lang.org](https://elixir-lang.org) for more information)
 
-## Usage
-To play the demo:
+## Run the tests
 
 ```shell
 > cd sm808
-> iex -S mix
+> mix test
+```
 
-iex(1)> Sm808.start_demo
-iex(2)> # And when you're done listening:
-iex(3)> Sm808.stop(v)
+## Usage
+To play the demos:
+
+```shell
+> mix escript.build
+> ./sm808
 ```
 To create your own beats in IEX:
 ```shell
@@ -25,11 +28,8 @@ To create your own beats in IEX:
 
 iex(1)> alias Sm808.Song
 iex(2)> song = Song.new(120, "New Song")
-iex(3)> {:ok, song} = Song.add_pattern(song, [1,0,0,0], "kick")
-iex(4)> {:ok, song} = Song.add_pattern(song, [0,0,0,0,1,0,0,0], "snare")
-iex(5)> {:ok, song} = Song.add_pattern(song, [0,0,1,0,0,0,1,0], "hihat")
-iex(6)> sequencer = Sequencer.new()
-iex(7)> {:ok, sequencer} = Sequencer.start(sequencer, song)
-iex(8)> # And when you're done listening:
-iex(9)> Sequencer.stop(sequencer)
+iex(3)> {:ok, song} = Sm808.Song.add_pattern(song, [1, 0, 0], "kick")
+iex(4)> {:ok, song} = Sm808.Song.add_pattern(song, [0, 0, 0, 0, 1, 0.2, 0, 0], "snare")
+iex(5)> {:ok, song} = Sm808.Song.add_pattern(song, [0.2, 0, 1, 0.2, 0.2, 0.2, 1, 0.2], "hihat")
+iex(6)> Sequencer.play(song)
 ```
