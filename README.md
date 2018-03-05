@@ -2,6 +2,8 @@
 
 An Elixir application that models the sequencer part of a drum machine.
 
+Drum samples courtesy of [99sounds.org](http://99sounds.org/drum-samples/).
+
 ## Requirements
 
 * Mac OS X (for audio playback)
@@ -33,3 +35,5 @@ iex(4)> {:ok, song} = Sm808.Song.add_pattern(song, [0, 0, 0, 0, 1, 0.2, 0, 0], "
 iex(5)> {:ok, song} = Sm808.Song.add_pattern(song, [0.2, 0, 1, 0.2, 0.2, 0.2, 1, 0.2], "hihat")
 iex(6)> Sequencer.play(song)
 ```
+
+![Output example](/drummachine.gif)
