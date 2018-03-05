@@ -13,7 +13,7 @@ defmodule SequencerTest do
 
     assert capture_io(fn ->
              Sequencer.play(song, 4)
-           end) == " kick | | | |"
+           end) == "|kick|_|_|_|"
   end
 
   test "starting a sequencer with overlapping patterns" do
@@ -26,6 +26,6 @@ defmodule SequencerTest do
 
     assert capture_io(fn ->
              Sequencer.play(song, 8)
-           end) == "   kick |   | hihat   |   |  snare  kick |   | hihat   |   |"
+           end) == "|kick|_|hihat|_|kick+snare|_|hihat|_|"
   end
 end

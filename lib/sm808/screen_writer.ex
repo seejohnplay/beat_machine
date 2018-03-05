@@ -3,19 +3,35 @@ defmodule Sm808.ScreenWriter do
 
   # Public API
 
-  def handle_steps([], _tick), do: IO.write("|")
+  def handle_steps([], 1), do: IO.write("|_|")
 
-  def handle_steps([pattern | patterns], tick) do
+  def handle_steps(patterns, tick) do
+    handle_steps(patterns, tick, [])
+  end
+
+  # Private
+
+  defp handle_steps([], 1, acc) do
+    IO.write("|" <> Enum.join(acc, "+") <> "|")
+  end
+
+  defp handle_steps([], _tick, []) do
+    IO.write("_|")
+  end
+
+  defp handle_steps([], _tick, acc) do
+    IO.write(Enum.join(acc, "+") <> "|")
+  end
+
+  defp handle_steps([pattern | patterns], tick, acc) do
     step = Pattern.fetch_step(pattern, tick)
 
     case step.status do
       :off ->
-        IO.write(" ")
+        handle_steps(patterns, tick, acc)
 
       :on ->
-        IO.write(" #{pattern.name} ")
+        handle_steps(patterns, tick, [pattern.name | acc])
     end
-
-    handle_steps(patterns, tick)
   end
 end
