@@ -1,4 +1,6 @@
 defmodule Sm808.ScreenWriter do
+  @behaviour Sm808.Writer
+
   alias Sm808.Pattern
 
   # Public API
