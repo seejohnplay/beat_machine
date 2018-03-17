@@ -1,7 +1,7 @@
-defmodule Sm808.AudioWriter do
-  @behaviour Sm808.Writer
+defmodule BeatMachine.AudioWriter do
+  @behaviour BeatMachine.Writer
 
-  alias Sm808.Pattern
+  alias BeatMachine.Pattern
 
   # Public API
 

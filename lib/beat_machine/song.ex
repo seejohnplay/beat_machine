@@ -1,5 +1,5 @@
-defmodule Sm808.Song do
-  alias Sm808.{Song, Pattern, ScreenWriter, AudioWriter}
+defmodule BeatMachine.Song do
+  alias BeatMachine.{Song, Pattern, ScreenWriter, AudioWriter}
 
   @enforce_keys [:bpm, :title, :patterns]
   defstruct [:bpm, :title, :patterns, :writers]
@@ -31,7 +31,7 @@ defmodule Sm808.Song do
 
   def handle_tick([], _, _), do: nil
 
-  def handle_tick(Sm808.TestWriter = writer, patterns, tick) do
+  def handle_tick(BeatMachine.TestWriter = writer, patterns, tick) do
     writer.handle_steps(patterns, tick)
   end
 

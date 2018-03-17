@@ -1,5 +1,5 @@
-defmodule Sm808.Sequencer do
-  alias Sm808.Song
+defmodule BeatMachine.Sequencer do
+  alias BeatMachine.Song
 
   # Public API
 

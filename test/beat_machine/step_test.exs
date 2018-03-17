@@ -1,7 +1,7 @@
 defmodule StepTest do
   use ExUnit.Case
 
-  alias Sm808.Step
+  alias BeatMachine.Step
 
   test "creating a new step with a velocity of 0 sets the status to :off" do
     velocity = 0

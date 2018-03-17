@@ -1,4 +1,4 @@
-defmodule Sm808.Step do
+defmodule BeatMachine.Step do
   alias __MODULE__
 
   @enforce_keys [:status, :velocity]

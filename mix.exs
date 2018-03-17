@@ -1,9 +1,9 @@
-defmodule Sm808.MixProject do
+defmodule BeatMachine.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :sm808,
+      app: :beat_machine,
       version: "0.1.0",
       elixir: "~> 1.6",
       escript: escript(),
@@ -20,7 +20,7 @@ defmodule Sm808.MixProject do
   end
 
   defp escript do
-    [main_module: Sm808.CLI]
+    [main_module: BeatMachine.CLI]
   end
 
   # Run "mix help deps" to learn about dependencies.

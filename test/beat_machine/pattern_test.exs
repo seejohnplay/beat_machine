@@ -1,7 +1,7 @@
 defmodule PatternTest do
   use ExUnit.Case
 
-  alias Sm808.Pattern
+  alias BeatMachine.Pattern
 
   test "creating a new pattern with name and steps" do
     name = "kick"

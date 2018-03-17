@@ -1,5 +1,5 @@
-defmodule Sm808.Pattern do
-  alias Sm808.{Pattern, Step}
+defmodule BeatMachine.Pattern do
+  alias BeatMachine.{Pattern, Step}
 
   @enforce_keys [:name, :steps]
   defstruct [:name, :steps]
