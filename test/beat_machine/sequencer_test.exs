@@ -9,7 +9,7 @@ defmodule SequencerTest do
     bpm = 1000
     title = "New Song"
     song = Song.new(bpm, title, [ScreenWriter])
-    {:ok, song} = BeatMachine.Song.add_pattern(song, [1, 0, 0, 0], "kick")
+    {:ok, song} = BeatMachine.Song.add_pattern(song, "kick", [1, 0, 0, 0])
 
     assert capture_io(fn ->
              Sequencer.play(song, 4)
@@ -20,9 +20,9 @@ defmodule SequencerTest do
     bpm = 1000
     title = "New Song"
     song = Song.new(bpm, title, [BeatMachine.ScreenWriter])
-    {:ok, song} = BeatMachine.Song.add_pattern(song, [1, 0, 0, 0], "kick")
-    {:ok, song} = BeatMachine.Song.add_pattern(song, [0, 0, 0, 0, 1, 0, 0, 0], "snare")
-    {:ok, song} = BeatMachine.Song.add_pattern(song, [0, 0, 1, 0, 0, 0, 1, 0], "hihat")
+    {:ok, song} = BeatMachine.Song.add_pattern(song, "kick", [1, 0, 0, 0])
+    {:ok, song} = BeatMachine.Song.add_pattern(song, "snare", [0, 0, 0, 0, 1, 0, 0, 0])
+    {:ok, song} = BeatMachine.Song.add_pattern(song, "hihat", [0, 0, 1, 0, 0, 0, 1, 0])
 
     assert capture_io(fn ->
              Sequencer.play(song, 8)

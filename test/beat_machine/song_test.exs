@@ -24,7 +24,7 @@ defmodule SongTest do
     bpm = 120
     title = "New Song"
     song = Song.new(bpm, title)
-    {:ok, song} = BeatMachine.Song.add_pattern(song, [1, 0, 0, 0], "kick")
+    {:ok, song} = BeatMachine.Song.add_pattern(song, "kick", [1, 0, 0, 0])
 
     assert length(song.patterns) == 1
   end
@@ -33,7 +33,7 @@ defmodule SongTest do
     bpm = 120
     title = "New Song"
     song = Song.new(bpm, title)
-    {:error, message} = BeatMachine.Song.add_pattern(song, :not_a_list, "kick")
+    {:error, message} = BeatMachine.Song.add_pattern(song, "kick", :not_a_list)
 
     assert message == :invalid_steps
     assert length(song.patterns) == 0

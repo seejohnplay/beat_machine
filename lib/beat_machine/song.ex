@@ -10,7 +10,7 @@ defmodule BeatMachine.Song do
     %Song{bpm: bpm, title: title, patterns: [], writers: writers}
   end
 
-  def add_pattern(song = %Song{}, steps, sample_name) do
+  def add_pattern(song = %Song{}, sample_name, steps) do
     pattern = Pattern.new(sample_name, steps)
 
     case pattern do
@@ -30,10 +30,6 @@ defmodule BeatMachine.Song do
   # Private
 
   def handle_tick([], _, _), do: nil
-
-  def handle_tick(BeatMachine.TestWriter = writer, patterns, tick) do
-    writer.handle_steps(patterns, tick)
-  end
 
   def handle_tick([writer | writers], patterns, tick) do
     writer.handle_steps(patterns, tick)
